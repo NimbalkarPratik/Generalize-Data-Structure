@@ -856,12 +856,195 @@ int DoublyCL<T> :: Count()
 }
 
 
+template <class T>
+class Stack
+{  
+   public:
+      struct node<T>* First;
+
+      Stack();
+
+      void Push(T no);
+      void Pop();
+      void Display();
+      int Count();
+      
+};
+
+template <class T>
+Stack<T> :: Stack()
+{
+   First = NULL;
+}
+
+template <class T>
+void Stack<T> :: Push(T no)
+{
+   struct node<T>* newn = new node<T>;
+   newn->data = no;
+   newn->next = NULL;
+
+   if(First == NULL)
+   {
+      First = newn;
+   }
+   else
+   {
+      newn->next = First;
+      First = newn;
+   }
+   cout<< no <<" is Pushed Successfully "<<"\n";
+}
+
+template <class T>
+void Stack<T> :: Pop()
+{
+   T iValue=0;
+   if(First == NULL)
+   {
+      printf("Stack is empty\n");
+   }
+   else if((First)->next == NULL)
+   {
+      iValue = (First)->data;
+      free (First);
+      First = NULL;
+   }
+   else
+   {
+      iValue = (First)->data;
+      struct node<T>* temp = First;
+      First = (First)->next;
+      free(temp);
+   }
+   cout<< iValue <<" Is Popped successfully"<<"\n";
+}
+
+template <class T>
+void Stack<T> :: Display()
+{
+   struct node<T>* temp = First;
+   while(temp != NULL)
+   {
+      cout<<"|"<<temp->data<<"|->";
+      temp = temp->next;
+   }
+   cout<<"NULL"<<"\n";
+}
+
+template <class T>
+int Stack<T> :: Count()
+{
+   int iCnt=0;
+   struct node<T>* temp = First;
+   while(temp != NULL)
+   {
+      iCnt++;
+      temp = temp->next;
+   }
+   return iCnt;
+}
+
+
+template <class T>
+class Queue
+{
+   public :
+      struct node<T>* First;
+
+      Queue();
+
+      void EnQueue(T no);
+      void DeQueue();
+      void Display();
+      int Count();
+};
+
+template <class T>
+Queue<T> :: Queue()
+{
+   First = NULL;
+}
+
+template <class T>
+void Queue<T> :: EnQueue(T no)
+{
+   struct node<T>* newn= new node<T>;
+   newn->data = no;
+   newn->next = NULL;
+
+   if(First == NULL)
+   {
+      First = newn;
+   }
+   else
+   {
+      struct node<T>* temp = First;
+      while(temp->next != NULL)
+      {
+         temp = temp->next;
+      }
+      temp->next = newn;
+   }
+   cout<<no<<" is Added Successfully in Queue "<<"\n";
+}
+
+template <class T>
+void Queue<T> :: DeQueue()
+{
+   T iValue = 0;
+   if(First == NULL)
+   {
+      cout<<"Queue is Empty"<<"\n";
+   }
+   else if((First)->next == NULL)
+   {
+      iValue = (First)->data;
+      delete First;
+      First = NULL;
+   }
+   else
+   {
+      iValue = (First)->data;
+      struct node<T>* temp = First;
+      First = (First)->next;
+      delete temp;
+   }
+   cout<<iValue<<" is Successfully Removed from Queue "<<"\n";
+}
+
+template <class T>
+void Queue<T> :: Display()
+{
+   struct node<T>* temp = First;
+   while(temp != NULL)
+   {
+      cout<<"|"<<temp->data<<"|->";
+      temp = temp->next;
+   }
+   cout<<"NULL"<<"\n";
+}
+
+template <class T>
+int Queue<T> :: Count()
+{
+   struct node<T>* temp = First;
+   int iCnt=0;
+   while(temp != NULL)
+   {
+      iCnt++;
+      temp = temp->next;
+   }
+   return iCnt;
+}
+
+
 
 
 int main()
 {
-   cout<<"---------------------------------------------------------------------------------------"<<"\n";
-   cout<<"  SINGLY LINEAR LINKED LIST  "<<"\n";
+   cout<<"------------------------------------------------------------------------------------------------------------------------"<<"\n";
+   cout<<"                                             SINGLY LINEAR LINKED LIST                                                  "<<"\n";
 
    int iRet=0;
    SinglyLL <int>aiobj;
@@ -999,8 +1182,8 @@ int main()
    iRet = adobj.Count();
    cout<<"DeleteLast Nodes in the Linklist are:"<<iRet<<"\n";
 
-   cout<<"---------------------------------------------------------------------------------------"<<"\n";
-   cout<<"  SINGLY CIRCULAR LINKED LIST  "<<"\n";
+   cout<<"------------------------------------------------------------------------------------------------------------------------"<<"\n";
+   cout<<"                                             SINGLY CIRCULAR LINKED LIST                                              "<<"\n";
 
    SinglyCL <int>biobj;
    biobj.InsertFirst(21);
@@ -1137,8 +1320,8 @@ int main()
    iRet = bdobj.Count();
    cout<<"DeleteLast Nodes in the Linklist are:"<<iRet<<"\n";
 
-   cout<<"---------------------------------------------------------------------------------------"<<"\n";
-   cout<<"  DOUBLY LINEAR LINKED LIST  "<<"\n";
+   cout<<"-----------------------------------------------------------------------------------------------------------------------"<<"\n";
+   cout<<"                                           DOUBLY LINEAR LINKED LIST                                                   "<<"\n";
 
    DoublyLL <int>ciobj;
    ciobj.InsertFirst(21);
@@ -1275,8 +1458,8 @@ int main()
    iRet = cdobj.Count();
    cout<<"DeleteLast Nodes in the Linklist are:"<<iRet<<"\n";
 
-   cout<<"---------------------------------------------------------------------------------------"<<"\n";
-   cout<<"  DOUBLY CIRCULAR LINKED LIST  "<<"\n";
+   cout<<"-----------------------------------------------------------------------------------------------------------------------"<<"\n";
+   cout<<"                                          DOUBLY CIRCULAR LINKED LIST                                                   "<<"\n";
 
    DoublyCL <int>diobj;
    diobj.InsertFirst(21);
@@ -1412,6 +1595,136 @@ int main()
    ddobj.Display();
    iRet = ddobj.Count();
    cout<<"DeleteLast Nodes in the Linklist are:"<<iRet<<"\n";
+
+   cout<<"--------------------------------------------------------------------------------------------------------------------"<<"\n";
+   cout<<"                                                      Stack                                                        "<<"\n";
+
+   Stack<int>Ssobj;
+
+   Ssobj.Push(51);
+   Ssobj.Push(21);
+   Ssobj.Push(11);
+
+   Ssobj.Display();
+   iRet = Ssobj.Count();
+   printf("Nodes in the stack are : %d \n",iRet);
+
+   Ssobj.Pop();
+
+   Ssobj.Display();
+   iRet = Ssobj.Count();
+   printf("Nodes in the stack are : %d \n",iRet);
+
+   Stack <char>Scobj;
+   Scobj.Push('C');
+   Scobj.Push('B');
+   Scobj.Push('A');
+
+   Scobj.Display();
+   iRet = Scobj.Count();
+   printf("Nodes in the stack are : %d \n",iRet);
+
+   Scobj.Pop();
+
+   Scobj.Display();
+   iRet = Scobj.Count();
+   printf("Nodes in the stack are : %d \n",iRet);
+
+   Stack <float>Sfobj;
+   Sfobj.Push(51.51f);
+   Sfobj.Push(21.21f);
+   Sfobj.Push(11.11f);
+
+   Sfobj.Display();
+   iRet = Sfobj.Count();
+   printf("Nodes in the stack are : %d \n",iRet);
+
+   Sfobj.Pop();
+
+   Sfobj.Display();
+   iRet = Sfobj.Count();
+   printf("Nodes in the stack are : %d \n",iRet);
+
+   Stack <double>Sdobj;
+   Sdobj.Push(51.555);
+   Sdobj.Push(21.222);
+   Sdobj.Push(11.111);
+
+   Sdobj.Display();
+   iRet = Sdobj.Count();
+   printf("Nodes in the stack are : %d \n",iRet);
+
+   Sdobj.Pop();
+
+   Sdobj.Display();
+   iRet = Sdobj.Count();
+   printf("Nodes in the stack are : %d \n",iRet);
+
+
+   cout<<"----------------------------------------------------------------------------------------------------------------"<<"\n";
+   cout<<"                                               Queue                                                            "<<"\n";
+
+   Queue <int>Qiobj;
+
+   Qiobj.EnQueue(11);
+   Qiobj.EnQueue(21);
+   Qiobj.EnQueue(51);
+
+   Qiobj.Display();
+   iRet = Qiobj.Count();
+   printf("Nodes in the Queue are : %d \n",iRet);
+
+   Qiobj.DeQueue();
+
+   Qiobj.Display();
+   iRet = Qiobj.Count();
+   printf("Nodes in the Queue are : %d \n",iRet);
+
+   Queue <char>Qcobj;
+   Qcobj.EnQueue('A');
+   Qcobj.EnQueue('B');
+   Qcobj.EnQueue('C');
+
+   Qcobj.Display();
+   iRet = Qcobj.Count();
+   printf("Nodes in the Queue are : %d \n",iRet);
+
+   Qcobj.DeQueue();
+
+   Qcobj.Display();
+   iRet = Qcobj.Count();
+   printf("Nodes in the Queue are : %d \n",iRet);
+
+   Queue <float>Qfobj;
+   Qfobj.EnQueue(11.11f);
+   Qfobj.EnQueue(21.21f);
+   Qfobj.EnQueue(51.51f);
+
+   Qfobj.Display();
+   iRet = Qfobj.Count();
+   printf("Nodes in the Queue are : %d \n",iRet);
+
+   Qfobj.DeQueue();
+
+   Qfobj.Display();
+   iRet = Qfobj.Count();
+   printf("Nodes in the Queue are : %d \n",iRet);
+
+   Queue <double>Qdobj;
+   Qdobj.EnQueue(11.111);
+   Qdobj.EnQueue(21.222);
+   Qdobj.EnQueue(51.555);
+
+   Qdobj.Display();
+   iRet = Qdobj.Count();
+   printf("Nodes in the Queue are : %d \n",iRet);
+
+   Qdobj.DeQueue();
+
+   Qdobj.Display();
+   iRet = Qdobj.Count();
+   printf("Nodes in the Queue are : %d \n",iRet);
+
 
    return 0;
 }
